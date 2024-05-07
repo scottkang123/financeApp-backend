@@ -1,4 +1,31 @@
 services:
+
+  app:
+    image: 'docker-spring-boot-postgres:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database-1.clgqq4g8wq0r.us-east-1.rds.amazonaws.com:5432/db_1
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=scottkang123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+    ports:
+      - 8080:8080
+
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=scottkang123
+      - POSTGRES_DB=db_1
+    ports:
+      - "5433:5433"
+
   mail-dev:
     container_name: mail-dev-bsn
     image: maildev/maildev

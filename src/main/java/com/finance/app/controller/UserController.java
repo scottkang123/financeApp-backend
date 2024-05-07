@@ -1,4 +1,4 @@
-package com.finance.app;
+package com.finance.app.controller;
 
 import com.finance.app.model.User;
 import com.finance.app.repo.UserRepo;
