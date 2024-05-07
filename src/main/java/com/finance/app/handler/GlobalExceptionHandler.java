@@ -6,8 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -25,7 +29,7 @@ public class GlobalExceptionHandler {
                 );
     }
 
-    @ExceptionHandler(LockedException.class)
+    @ExceptionHandler(DisabledException.class)
     public ResponseEntity<ExceptionResponse> handleException(DisabledException exp){
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
@@ -38,7 +42,7 @@ public class GlobalExceptionHandler {
                 );
     }
 
-    @ExceptionHandler(LockedException.class)
+    @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ExceptionResponse> handleException(BadCredentialsException exp){
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
@@ -57,6 +61,37 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(
                         ExceptionResponse.builder()
+                                .error(exp.getMessage())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ExceptionResponse> handleException(MethodArgumentNotValidException exp){
+        Set<String> errors = new HashSet<>();
+        exp.getBindingResult().getAllErrors()
+                .forEach(error -> {
+                    var errorMessage = error.getDefaultMessage();
+                    errors.add(errorMessage);
+                });
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ExceptionResponse.builder()
+                                .validationErrors(errors)
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ExceptionResponse> handleException(Exception exp){
+        //log the exception
+        exp.printStackTrace();
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(
+                        ExceptionResponse.builder()
+                                .businessErrorDescription("Internal error, contact the admin")
                                 .error(exp.getMessage())
                                 .build()
                 );
