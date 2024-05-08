@@ -1,5 +1,5 @@
 # the base image
-FROM amazoncorretto:17
+FROM openjdk:21-jdk
 
 # the JAR file path
 ARG JAR_FILE=build/libs/*.jar
