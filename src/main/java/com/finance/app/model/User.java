@@ -46,7 +46,7 @@ public class User implements UserDetails, Principal {
     private List<Role> roles;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<StockBasicInfo> stocks;
+    private List<Stock> stocks;
 
     //Automatically track this
     @CreatedDate

@@ -1,17 +1,15 @@
 package com.finance.app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.CreatedDate;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -20,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class StockBasicInfo extends BaseEntity{
+public class Stock extends BaseEntity{
 
     private String companyName;
     private String symbol;
@@ -29,10 +27,15 @@ public class StockBasicInfo extends BaseEntity{
     private String exchange;
 
     //prevent serialization. Prevent infinite loop
-    @ManyToMany(mappedBy = "stocks")
+    @ManyToMany(mappedBy = "stocks") // come from the user model class
     @JsonIgnore
     private List<User> users;
 
+    @OneToMany(mappedBy = "stock")  //This comes from TradeHistory file -> private StockBasicInfo stockBasicInfo;
+    private List<TradeHistory> tradeHistories;
+
+    @OneToMany(mappedBy = "stock")
+    private List<FinancialInfo> financialInfos;
 
 
 }
