@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -20,11 +21,12 @@ import java.util.List;
 @Entity
 public class Stock extends BaseEntity{
 
-    private String companyName;
+    private String name;
     private String symbol;
     private String sector;
     private String industry;
     private String exchange;
+    private BigDecimal price;
 
     //prevent serialization. Prevent infinite loop
     @ManyToMany(mappedBy = "stocks") // come from the user model class
