@@ -30,7 +30,6 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(
-                                "/v1/fetch-and-save-stocks",
                                         "/auth/**",
                                         "/v2/api-docs",
                                         "/v3/api-docs",
