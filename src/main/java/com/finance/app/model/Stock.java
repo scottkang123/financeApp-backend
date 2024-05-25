@@ -1,6 +1,7 @@
 package com.finance.app.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.finance.app.serializable.Model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
@@ -19,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Stock extends BaseEntity{
+public class Stock extends BaseEntity implements Model {
 
     private String name;
     private String symbol;
