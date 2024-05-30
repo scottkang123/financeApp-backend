@@ -30,9 +30,9 @@ public class Stock extends BaseEntity implements Model {
     private BigDecimal price;
 
     //prevent serialization. Prevent infinite loop
-    @ManyToMany(mappedBy = "stocks") // come from the user model class
-    @JsonIgnore
-    private List<User> users;
+//    @ManyToMany(mappedBy = "stocks") // come from the user model class
+//    @JsonIgnore
+//    private List<User> users;
 
     @OneToMany(mappedBy = "stock")  //This comes from TradeHistory file -> private StockBasicInfo stockBasicInfo;
     private List<TradeHistory> tradeHistories;
