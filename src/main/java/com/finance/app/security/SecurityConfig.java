@@ -20,9 +20,6 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity(securedEnabled = true) //for role based
 public class SecurityConfig {
 
-    private final JwtFilter jwtAuthFilter;
-    private final AuthenticationProvider authenticationProvider;
-    //Find all the methods that have Bean annotation and run them
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -46,17 +43,11 @@ public class SecurityConfig {
                                 .anyRequest()
                                     .authenticated()
                         )
-                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))    //spring not store session state. act as if we dont know anything about this request.
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); //before processing usernamepassword authentication filter, execute jwtauth filter. This is on top of the default filters given by spring
+                .oauth2ResourceServer(auth ->
+                        auth.jwt(token -> token.jwtAuthenticationConverter(new KeycloakJwtAuthenticationConverter())));
+
         return http.build();
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        http.csrf(AbstractHttpConfigurer::disable);
-        return http.build();
-    }
 
 }
