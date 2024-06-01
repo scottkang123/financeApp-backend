@@ -13,6 +13,60 @@ import static com.nimbusds.jose.util.JSONObjectUtils.getString;
 @Component
 public class StockTransformer implements Transformer<Stock, StockDTO> {
 
+    public Stock updateExistingStock(Stock existingStock, StockDTO stockDTO) {
+        existingStock.setName(stockDTO.getName());
+        existingStock.setSector(stockDTO.getSector());
+        existingStock.setIndustry(stockDTO.getIndustry());
+        existingStock.setExchange(stockDTO.getExchange());
+        existingStock.setDescription(stockDTO.getDescription());
+        existingStock.setAssetType(stockDTO.getAssetType());
+        existingStock.setCIK(stockDTO.getCIK());
+        existingStock.setCurrency(stockDTO.getCurrency());
+        existingStock.setCountry(stockDTO.getCountry());
+        existingStock.setAddress(stockDTO.getAddress());
+        existingStock.setFiscalYearEnd(stockDTO.getFiscalYearEnd());
+        existingStock.setLatestQuarter(stockDTO.getLatestQuarter());
+        existingStock.setMarketCapitalization(stockDTO.getMarketCapitalization());
+        existingStock.setEBITDA(stockDTO.getEBITDA());
+        existingStock.setPERatio(stockDTO.getPERatio());
+        existingStock.setPEGRatio(stockDTO.getPEGRatio());
+        existingStock.setBookValue(stockDTO.getBookValue());
+        existingStock.setDividendPerShare(stockDTO.getDividendPerShare());
+        existingStock.setDividendYield(stockDTO.getDividendYield());
+        existingStock.setEPS(stockDTO.getEPS());
+        existingStock.setRevenuePerShareTTM(stockDTO.getRevenuePerShareTTM());
+        existingStock.setProfitMargin(stockDTO.getProfitMargin());
+        existingStock.setOperatingMarginTTM(stockDTO.getOperatingMarginTTM());
+        existingStock.setReturnOnAssetsTTM(stockDTO.getReturnOnAssetsTTM());
+        existingStock.setReturnOnEquityTTM(stockDTO.getReturnOnEquityTTM());
+        existingStock.setRevenueTTM(stockDTO.getRevenueTTM());
+        existingStock.setGrossProfitTTM(stockDTO.getGrossProfitTTM());
+        existingStock.setDilutedEPSTTM(stockDTO.getDilutedEPSTTM());
+        existingStock.setQuarterlyEarningsGrowthYOY(stockDTO.getQuarterlyEarningsGrowthYOY());
+        existingStock.setQuarterlyRevenueGrowthYOY(stockDTO.getQuarterlyRevenueGrowthYOY());
+        existingStock.setAnalystTargetPrice(stockDTO.getAnalystTargetPrice());
+        existingStock.setAnalystRatingStrongBuy(stockDTO.getAnalystRatingStrongBuy());
+        existingStock.setAnalystRatingBuy(stockDTO.getAnalystRatingBuy());
+        existingStock.setAnalystRatingHold(stockDTO.getAnalystRatingHold());
+        existingStock.setAnalystRatingSell(stockDTO.getAnalystRatingSell());
+        existingStock.setAnalystRatingStrongSell(stockDTO.getAnalystRatingStrongSell());
+        existingStock.setTrailingPE(stockDTO.getTrailingPE());
+        existingStock.setForwardPE(stockDTO.getForwardPE());
+        existingStock.setPriceToSalesRatioTTM(stockDTO.getPriceToSalesRatioTTM());
+        existingStock.setPriceToBookRatio(stockDTO.getPriceToBookRatio());
+        existingStock.setEVToRevenue(stockDTO.getEVToRevenue());
+        existingStock.setEVToEBITDA(stockDTO.getEVToEBITDA());
+        existingStock.setBeta(stockDTO.getBeta());
+        existingStock.setWeek52High(stockDTO.getWeek52High());
+        existingStock.setWeek52Low(stockDTO.getWeek52Low());
+        existingStock.setMovingAverage50Day(stockDTO.getMovingAverage50Day());
+        existingStock.setMovingAverage200Day(stockDTO.getMovingAverage200Day());
+        existingStock.setSharesOutstanding(stockDTO.getSharesOutstanding());
+        existingStock.setDividendDate(stockDTO.getDividendDate());
+        existingStock.setExDividendDate(stockDTO.getExDividendDate());
+        return existingStock;
+    }
+
     public static StockDTO mapJsonToStockDTO(Map<String, Object> jsonMap) throws ParseException {
         return StockDTO.builder()
                 .name(getString(jsonMap, "Name"))

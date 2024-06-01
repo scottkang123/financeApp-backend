@@ -35,12 +35,19 @@ public class StockController {
             // Fetch S&P 500 symbols
             List<String> sp500Symbols = stockService.fetchSp500Symbols();
 
+            logger.info("Sp500 symbols {}", sp500Symbols);
             logger.info("Fetching and saving data for each symbol");
 
+            int count = 0;
             // Fetch and save data for each symbol
             for (String symbol : sp500Symbols) {
-                StockDTO stockDTO = stockService.fetchStockDataFromAlphaVantage(symbol);
-                stockService.saveStockData(stockDTO);
+                if(count > 5)
+                    break;
+                if (stockService.isStockDataMissing(symbol)) {
+                    StockDTO stockDTO = stockService.fetchStockDataFromAlphaVantage(symbol);
+                    stockService.saveStockData(stockDTO);
+                }
+                count++;
             }
             logger.info("Data fetching and saving completed successfully");
 

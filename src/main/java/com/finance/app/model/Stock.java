@@ -25,6 +25,8 @@ public class Stock extends BaseEntity implements Model {
 
 
     private String name;
+
+    @Column(unique = true, nullable = false)
     private String symbol;
     private String sector;
     private String industry;

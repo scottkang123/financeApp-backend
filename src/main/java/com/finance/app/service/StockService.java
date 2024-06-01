@@ -47,21 +47,25 @@ public class StockService {
         stockRepo.save(stock);
     }
 
-
+    public boolean isStockDataMissing(String symbol) {
+        Stock stock = stockRepo.findBySymbol(symbol);
+        return stock == null;
+    }
 
     public StockDTO fetchStockDataFromAlphaVantage(String symbol) throws IOException, ParseException {
 
         try{
             RestTemplate restTemplate = new RestTemplate();
             String url = String.format(alphaVantageApiUrl, symbol, alphaVantageApiKey);
+
             String response = restTemplate.getForObject(url, String.class);
 
-            // Logging the response for debugging purposes
-            logger.debug("Alpha Vantage API response for symbol {}: {}", symbol, response);
+            logger.info(response);
 
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, Object> jsonMap = objectMapper.readValue(response, Map.class);
 
+            logger.info(jsonMap.toString());
             return StockTransformer.mapJsonToStockDTO(jsonMap);
 
         }catch(IOException | ParseException e){
