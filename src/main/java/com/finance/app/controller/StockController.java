@@ -41,7 +41,7 @@ public class StockController {
             int count = 0;
             // Fetch and save data for each symbol
             for (String symbol : sp500Symbols) {
-                if(count > 5)
+                if(count > 3)
                     break;
                 if (stockService.isStockDataMissing(symbol)) {
                     StockDTO stockDTO = stockService.fetchStockDataFromAlphaVantage(symbol);

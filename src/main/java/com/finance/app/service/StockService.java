@@ -55,17 +55,20 @@ public class StockService {
     public StockDTO fetchStockDataFromAlphaVantage(String symbol) throws IOException, ParseException {
 
         try{
+
             RestTemplate restTemplate = new RestTemplate();
             String url = String.format(alphaVantageApiUrl, symbol, alphaVantageApiKey);
 
+            logger.info("This is url: {}", url);
+
             String response = restTemplate.getForObject(url, String.class);
 
-            logger.info(response);
+            logger.info("This is the response {}", response);
 
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, Object> jsonMap = objectMapper.readValue(response, Map.class);
 
-            logger.info(jsonMap.toString());
+            logger.info("This is the jsonMap {}", jsonMap.toString());
             return StockTransformer.mapJsonToStockDTO(jsonMap);
 
         }catch(IOException | ParseException e){
