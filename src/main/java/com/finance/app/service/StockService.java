@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +25,7 @@ import java.util.Map;
 
 @Service
 public class StockService {
+
 
     @Value("${alpha.vantage.api.key}")
     private String alphaVantageApiKey;
@@ -45,6 +45,12 @@ public class StockService {
     public void saveStockData(StockDTO stockDTO) {
         Stock stock = stockTransformer.transformDtoM(stockDTO);
         stockRepo.save(stock);
+    }
+
+    public List<Object[]> getFirst500StocksByPERatio() {
+        List<Object[]> stocks = stockRepo.findFirst500ByOrderByPERatioAsc();
+        // Return only the first 500 results
+        return stocks.size() > 500 ? stocks.subList(0, 500) : stocks;
     }
 
     public boolean isStockDataMissing(String symbol) {

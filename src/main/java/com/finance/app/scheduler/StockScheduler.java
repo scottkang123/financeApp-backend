@@ -1,7 +1,7 @@
 package com.finance.app.scheduler;
 
+import com.finance.app.controller.StockController;
 import com.finance.app.dto.StockDTO;
-import com.finance.app.model.Stock;
 import com.finance.app.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,11 +9,14 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Collections;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class StockScheduler {
+
+    private static final Logger logger = LoggerFactory.getLogger(StockController.class);
 
     @Autowired
     private StockService stockService;
@@ -26,12 +29,22 @@ public class StockScheduler {
 
             // Fetch and save data for each symbol
             for (String symbol : sp500Symbols) {
-                StockDTO stockDTO = stockService.fetchStockDataFromAlphaVantage(symbol);
-                stockService.saveStockData(stockDTO);
+                String modifiedSymbol = symbol;
+                // Modify symbol if necessary
+                if (symbol.equalsIgnoreCase("BRK.B")) {
+                    modifiedSymbol = "BRK-B";
+                }
+                if (stockService.isStockDataMissing(modifiedSymbol)) {
+                    StockDTO stockDTO = stockService.fetchStockDataFromAlphaVantage(modifiedSymbol);
+                    if (stockDTO.getName() != null) {
+                        stockService.saveStockData(stockDTO);
+                    } else {
+                        logger.info("Skipping symbol {} due to missing data", modifiedSymbol);
+                    }
+                }
             }
         } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
-            // Handle the exception, log it or perform any necessary actions
+            logger.error("An error occurred while updating stock data", e);
         }
     }
 }
