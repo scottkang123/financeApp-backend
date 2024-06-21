@@ -47,12 +47,6 @@ public class StockService {
         stockRepo.save(stock);
     }
 
-    public List<Object[]> getFirst500StocksByPERatio() {
-        List<Object[]> stocks = stockRepo.findFirst500ByOrderByPERatioAsc();
-        // Return only the first 500 results
-        return stocks.size() > 500 ? stocks.subList(0, 500) : stocks;
-    }
-
     public boolean isStockDataMissing(String symbol) {
         Stock stock = stockRepo.findBySymbol(symbol);
         return stock == null;

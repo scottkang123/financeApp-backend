@@ -69,13 +69,5 @@ public class StockController {
         }
     }
 
-    @GetMapping("/top500-by-peratio")
-    public ResponseEntity<List<Object[]>> getTop500StocksByPERatio() {
-        List<Object[]> stocks = stockService.getFirst500StocksByPERatio();
-        return ResponseEntity.ok(stocks);
-    }
-
-
-
 
 }

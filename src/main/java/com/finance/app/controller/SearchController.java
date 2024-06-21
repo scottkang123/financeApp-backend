@@ -1,7 +1,5 @@
 package com.finance.app.controller;
 
-import com.finance.app.dto.StockDTO;
-import com.finance.app.serializable.DTO;
 import com.finance.app.service.SearchService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
