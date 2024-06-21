@@ -19,7 +19,7 @@ import java.time.LocalDate;
 public class EarningsCalender extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "symbol", referencedColumnName = "symbol", insertable = false, updatable = false)
+    @JoinColumn(name = "symbol", referencedColumnName = "symbol")
     private Stock stock;
 
     private LocalDate reportDate;
