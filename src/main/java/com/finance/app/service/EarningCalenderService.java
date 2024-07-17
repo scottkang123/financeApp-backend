@@ -95,4 +95,25 @@ public class EarningCalenderService {
         logger.info("Saving Entries: " + earningsCalenders);
         earningsCalenderRepository.saveAll(earningsCalenders);
     }
+
+    public List<EarningCalenderDTO> retrieveEarningsCalendar() {
+        List<EarningsCalender> earningsCalenders = earningsCalenderRepository.findAll(); // Adjust as per your repository method
+
+        //Create a file in Transformer folder -> EarningCalendarTransformer or smth
+        return earningsCalenders.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private EarningCalenderDTO convertToDTO(EarningsCalender earningsCalender) {
+        return EarningCalenderDTO.builder()
+                .symbol(earningsCalender.getStock().getSymbol())
+                .name(earningsCalender.getStock().getName()) // Adjust as per your Stock entity
+                .reportDate(earningsCalender.getReportDate())
+                .fiscalDateEnding(earningsCalender.getFiscalDateEnding())
+                .estimate(earningsCalender.getEstimate())
+                .currency(earningsCalender.getCurrency())
+                .build();
+    }
+
 }

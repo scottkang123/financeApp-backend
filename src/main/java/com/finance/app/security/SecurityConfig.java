@@ -29,7 +29,8 @@ public class SecurityConfig {
                         req.requestMatchers(
                                         "/auth/**",
                                         "/stock/fetchStockData",
-                                        "/calender/fetch-and-save",
+                                        "/calendar/fetch-and-save",
+                                        "/calendar/retrieve-earnings-calendar",
                                         "/search/**",
                                         "/v2/api-docs",
                                         "/v3/api-docs",
