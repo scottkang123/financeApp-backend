@@ -1,10 +1,12 @@
 package com.finance.app.dto;
+import com.finance.app.model.EarningsCalender;
 import com.finance.app.serializable.DTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -12,8 +14,8 @@ import java.math.BigDecimal;
 public class EarningCalenderDTO implements DTO{
     private String symbol;
     private String name;
-    private String reportDate;
-    private String fiscalDateEnding;
+    private LocalDate reportDate;
+    private LocalDate fiscalDateEnding;
     private String estimate;
     private String currency;
 
@@ -28,4 +30,6 @@ public class EarningCalenderDTO implements DTO{
                 ", currency='" + currency + '\'' +
                 '}';
     }
+
+
 }
